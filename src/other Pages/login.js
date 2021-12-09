@@ -9,6 +9,9 @@ import { Component } from 'react'
             return (
                 <div className="navbar navbar-dark bg-white ">
                     <div className="col-0">
+                        <Link className="nav-link text-dark" to="/">Mstocks</Link>
+                    </div>
+                    <div className="col-0">
                         <Link className="nav-link text-dark" to="/stocklist">StockList</Link>
                     </div>
                     <div className="col-0">
@@ -18,7 +21,7 @@ import { Component } from 'react'
                         <Link className="nav-link text-dark" to="/about">About</Link>
                     </div>
                     <div className="col">
-                        <Link className="nav-link text-dark" to="/userinfo" >userinfo</Link>
+                        <Link className="nav-link text-dark" to="/userinfo" >Userinfo</Link>
                     </div>
                     <div className="col-0">
                         <Link className="nav-link text-dark" to="/login" >Login</Link>

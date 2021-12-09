@@ -15,20 +15,23 @@ import { Component } from 'react'
         this.handleSubmit = this.handleSubmit.bind(this);
       }
     state = {
-        stockdata:[],
+        stockdatalist:[],
         stock:[],
         value:[],
-        stockname:"",
+        stockdata:[],
+        date:[],
         valuestate:false
-    }
+    } 
 
 
     handleChange(event) {    this.setState({value: event.target.value});  }
     handleSubmit(event) {
-        axios.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&datatype=json&symbol="+this.state.value+".BSE&outputsize=compact&apikey=CX20863Y3WAKTKPT")
-        .then(app=> this.setState({stock:app.data["Time Series (Daily)"]["2021-12-03"]}))
+        axios.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&datatype=json&symbol="+this.state.value.toUpperCase()+".BSE&outputsize=compact&apikey=CX20863Y3WAKTKPT")
+        .then(app=> this.setState({stock:app.data["Meta Data"]}))
+        axios.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&datatype=json&symbol="+this.state.value.toUpperCase()+".BSE&outputsize=compact&apikey=CX20863Y3WAKTKPT")
+        .then(app=> this.setState({stockdatalist:app.data["Time Series (Daily)"][this.state.stock["3. Last Refreshed"]]}))
         this.setState({valuestate:true})
-        console.log(new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate());
+        
       event.preventDefault();
     }
 
@@ -44,16 +47,16 @@ import { Component } from 'react'
                 {this.state.valuestate?
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
-                        {this.getdata}
-                            <Card.Title className="text-center" >{this.state.value}</Card.Title>
+                            <Card.Title className="text-center" >{this.state.stock["2. Symbol"]}</Card.Title>
                             <Card.Text>
                                 <table>
+                                    <tbody>
                                     <tr>
                                         <td>
                                             open:
                                         </td>
                                         <td>
-                                            {this.state.stock["1. open"]}
+                                            {this.state.stockdatalist["1. open"]}
                                         </td>
                                     </tr>
                                     <tr>
@@ -61,7 +64,7 @@ import { Component } from 'react'
                                             close:
                                         </td>
                                         <td>
-                                            {this.state.stock["4. close"]}
+                                            {this.state.stockdatalist["4. close"]}
                                         </td>
                                     </tr>
                                     <tr> 
@@ -69,17 +72,18 @@ import { Component } from 'react'
                                             high:
                                         </td>
                                         <td>
-                                            {this.state.stock["2. high"]}
-                                        </td>
+                                            {this.state.stockdatalist["2. high"]}
+                                            </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             low:
                                         </td>
                                         <td>
-                                            {this.state.stock["3. low"]}
-                                        </td>
+                                            {this.state.stockdatalist["3. low"]}
+                                            </td>
                                     </tr>
+                                    </tbody>
                                 </table>
                             </Card.Text>
                             <Button variant="primary">Add To Watchlist</Button>
