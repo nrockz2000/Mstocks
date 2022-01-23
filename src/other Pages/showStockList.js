@@ -26,12 +26,11 @@ import { Component } from 'react'
 
     handleChange(event) {    this.setState({value: event.target.value});  }
     handleSubmit(event) {
-        axios.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&datatype=json&symbol="+this.state.value.toUpperCase()+".BSE&outputsize=compact&apikey=CX20863Y3WAKTKPT")
+        axios.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&datatype=json&symbol="+this.state.value.toUpperCase()+".BSE&outputsize=compact&apikey=CX20863Y3WAKTKPT")
         .then(app=> this.setState({stock:app.data["Meta Data"]}))
-        axios.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&datatype=json&symbol="+this.state.value.toUpperCase()+".BSE&outputsize=compact&apikey=CX20863Y3WAKTKPT")
+        axios.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&datatype=json&symbol="+this.state.value.toUpperCase()+".BSE&outputsize=compact&apikey=CX20863Y3WAKTKPT")
         .then(app=> this.setState({stockdatalist:app.data["Time Series (Daily)"][this.state.stock["3. Last Refreshed"]]}))
         this.setState({valuestate:true})
-        
       event.preventDefault();
     }
 
@@ -44,6 +43,7 @@ import { Component } from 'react'
                     <input type="text" value={this.state.value} onChange={this.handleChange} />        </label>
                     <input type="submit" value="Submit" />
                 </form>
+                {console.log(this.state.stockdatalist)}
                 {this.state.valuestate?
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
