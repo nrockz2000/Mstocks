@@ -10,9 +10,9 @@ class Home extends Component {
   componentDidMount() {
     axios
       .get(
-        "https://newsapi.org/v2/top-headlines?country=in&apiKey=c27efdbe42c54c6a884d79171747d575"
+        "https://newsdata.io/api/1/news?apikey=pub_3910818af12f20b3ff1004354a7e97620638&country=in&category=business"
       )
-      .then((app) => this.setState({ news: app.data["articles"] }));
+      .then((app) => this.setState({ news: app.data["results"] }));
   }
   render() {
     return (
@@ -20,6 +20,7 @@ class Home extends Component {
         <div className="h2">Todays Stories</div>
         <br></br>
         <br></br>
+        {console.log(this.state.news)}
         {this.state.news.map((app) => (
           <div key={app.id}>
             <div class="jumbotron">
@@ -36,7 +37,7 @@ class Home extends Component {
                   <div class="card-block px-2"></div>
                   <p className="lead">{app.title}</p>
                   <p>{app.description}</p>
-                  <a href={app.url} class="btn btn-primary" target="_blank">
+                  <a href={app.link} class="btn btn-primary" target="_blank">
                     Read More
                   </a>
                 </div>
